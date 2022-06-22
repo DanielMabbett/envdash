@@ -1,9 +1,10 @@
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
 from django.urls import reverse
+from django.views import generic
+from django.utils import timezone
 
-from .models import Question
-from .models import Choice
+from .models import Question, Choice
 
 ## longer way of presenting render
 # def index(request):
@@ -13,10 +14,27 @@ from .models import Choice
 #         'latest_question_list': latest_question_list,
 #     }
 #     return HttpResponse(template.render(context, request))
-def index(request):
-    latest_question_list = Question.objects.order_by('-pub_date')[:5]
-    context = {'latest_question_list': latest_question_list}
-    return render(request, 'polls/index.html', context)
+
+# def index(request):
+#     latest_question_list = Question.objects.order_by('-pub_date')[:5]
+#     context = {'latest_question_list': latest_question_list}
+#     return render(request, 'polls/index.html', context)
+class IndexView(generic.ListView):
+    template_name = 'polls/index.html'
+    context_object_name = 'latest_question_list'
+
+    # def get_queryset(self):
+    #     """Return the last five published questions."""
+    #     return Question.objects.order_by('-pub_date')[:5]
+    def get_queryset(self):
+        """
+        Return the last five published questions (not including those set to be
+        published in the future).
+        """
+        return Question.objects.filter(
+            pub_date__lte=timezone.now()
+        ).order_by('-pub_date')[:5]
+
 
 ## longer way of writing 404
 # def detail(request, question_id):
@@ -25,13 +43,26 @@ def index(request):
 #     except Question.DoesNotExist:
 #         raise Http404("Question does not exist")
 #     return render(request, 'polls/detail.html', {'question': question})
-def detail(request, question_id):
-    question = get_object_or_404(Question, pk=question_id)
-    return render(request, 'polls/detail.html', {'question': question})
+# def detail(request, question_id):
+#     question = get_object_or_404(Question, pk=question_id)
+#     return render(request, 'polls/detail.html', {'question': question})
+# class DetailView(generic.DetailView):
+#     model = Question
+#     template_name = 'polls/detail.html'
+class DetailView(generic.DetailView):
+    ...
+    def get_queryset(self):
+        """
+        Excludes any questions that aren't published yet.
+        """
+        return Question.objects.filter(pub_date__lte=timezone.now())
 
-def results(request, question_id):
-    response = "You're looking at the results of question %s."
-    return HttpResponse(response % question_id)
+# def results(request, question_id):
+#     response = "You're looking at the results of question %s."
+#     return HttpResponse(response % question_id)
+class ResultsView(generic.DetailView):
+    model = Question
+    template_name = 'polls/results.html'
 
 def vote(request, question_id):
     question = get_object_or_404(Question, pk=question_id)
