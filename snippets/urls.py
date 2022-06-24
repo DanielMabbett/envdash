@@ -28,13 +28,13 @@ from snippets import views
 # API endpoints
 urlpatterns = format_suffix_patterns([
     path('', views.api_root),
-    path('api/',
+    path('environments/',
         views.SnippetList.as_view(),
         name='snippet-list'),
-    path('api/<int:pk>/',
+    path('environments/<int:pk>/',
         views.SnippetDetail.as_view(),
         name='snippet-detail'),
-    path('api/<int:pk>/highlight/',
+    path('environments/<int:pk>/highlight/',
         views.SnippetHighlight.as_view(),
         name='snippet-highlight'),
     path('users/',
