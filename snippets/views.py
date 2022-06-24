@@ -8,7 +8,7 @@ from rest_framework.reverse import reverse
 from django.contrib.auth.models import User
 from rest_framework import permissions, viewsets
 
-class SnippetList(generics.ListCreateAPIView):
+class EnvironmentList(generics.ListCreateAPIView):
     queryset = Snippet.objects.all()
     serializer_class = SnippetSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]

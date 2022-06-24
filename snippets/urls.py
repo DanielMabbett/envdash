@@ -29,7 +29,7 @@ from snippets import views
 urlpatterns = format_suffix_patterns([
     path('', views.api_root),
     path('environments/',
-        views.SnippetList.as_view(),
+        views.EnvironmentList.as_view(),
         name='snippet-list'),
     path('environments/<int:pk>/',
         views.SnippetDetail.as_view(),
