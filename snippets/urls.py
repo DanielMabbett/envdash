@@ -32,7 +32,7 @@ urlpatterns = format_suffix_patterns([
         views.EnvironmentList.as_view(),
         name='snippet-list'),
     path('environments/<int:pk>/',
-        views.SnippetDetail.as_view(),
+        views.EnvironmentDetail.as_view(),
         name='snippet-detail'),
     path('environments/<int:pk>/highlight/',
         views.SnippetHighlight.as_view(),

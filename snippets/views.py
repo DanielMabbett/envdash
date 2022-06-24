@@ -16,7 +16,7 @@ class EnvironmentList(generics.ListCreateAPIView):
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
 
-class SnippetDetail(generics.RetrieveUpdateDestroyAPIView):
+class EnvironmentDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Snippet.objects.all()
     serializer_class = SnippetSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly,
