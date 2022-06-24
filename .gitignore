@@ -162,3 +162,4 @@ cython_debug/
 # db
 db.sqlite3
 tutorial/snippets/migrations*
+snippets/migrations/*
