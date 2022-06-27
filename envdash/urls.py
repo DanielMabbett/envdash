@@ -1,12 +1,12 @@
-from snippets.models import Snippet
-from snippets.views import EnvironmentViewSet, UserViewSet, api_root
+from envdash.models import Snippet
+from envdash.views import EnvironmentViewSet, UserViewSet, api_root
 from rest_framework import renderers
 from django.urls import path
 from rest_framework.urlpatterns import format_suffix_patterns
-from snippets import views
+from envdash import views
 from django.urls import path
 from rest_framework.urlpatterns import format_suffix_patterns
-from snippets import views
+from envdash import views
 
 # Adding this is causing issues with loading the views
 # app_name = 'snippets'

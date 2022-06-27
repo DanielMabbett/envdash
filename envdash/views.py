@@ -4,9 +4,9 @@ from rest_framework.response import Response
 from rest_framework.reverse import reverse
 from django.contrib.auth.models import User
 from django.views import generic
-from snippets.permissions import IsOwnerOrReadOnly
-from snippets.models import Snippet
-from snippets.serializers import SnippetSerializer, UserSerializer
+from envdash.permissions import IsOwnerOrReadOnly
+from envdash.models import Snippet
+from envdash.serializers import SnippetSerializer, UserSerializer
 
 @api_view(['GET'])
 def api_root(request, format=None):
