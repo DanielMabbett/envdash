@@ -15,10 +15,11 @@
     <ul>
         {% for environment in environment_list %}
         <article>
-            <h2>{{ environment.title }}</a></h2>
+            <h2>{{ environment.title }}</h2>
+            <p>{{ environment.group }}</p>
             <p>{{ environment.description|linebreaksbr }}</p>
             <p>MKE Version: {{ environment.version_mke }}</p>
-            <p>Platform Release Version: {{ environment.version_mke }}</p>
+            <p>Platform Release Version: {{ environment.version_release }}</p>
         </article>
         {% endfor %}
     </ul>
