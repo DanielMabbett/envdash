@@ -1,12 +1,22 @@
-from snippets.models import Snippet
-from snippets.serializers import SnippetSerializer, UserSerializer
-from rest_framework import generics, permissions, renderers
-from snippets.permissions import IsOwnerOrReadOnly
+from rest_framework import generics, permissions, renderers, viewsets
 from rest_framework.decorators import api_view, action
 from rest_framework.response import Response
 from rest_framework.reverse import reverse
 from django.contrib.auth.models import User
-from rest_framework import permissions, viewsets
+from django.views import generic
+from snippets.permissions import IsOwnerOrReadOnly
+from snippets.models import Snippet
+from snippets.serializers import SnippetSerializer, UserSerializer
+
+@api_view(['GET'])
+def api_root(request, format=None):
+    """
+    The root view for the API
+    """
+    return Response({
+        'users': reverse('user-list', request=request, format=format),
+        'environments': reverse('environment-list', request=request, format=format)
+    })
 
 class EnvironmentList(generics.ListCreateAPIView):
     queryset = Snippet.objects.all()
@@ -21,36 +31,6 @@ class EnvironmentDetail(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = SnippetSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly,
                         IsOwnerOrReadOnly]
-
-class UserList(generics.ListAPIView):
-    queryset = User.objects.all()
-    serializer_class = UserSerializer
-
-class UserDetail(generics.RetrieveAPIView):
-    queryset = User.objects.all()
-    serializer_class = UserSerializer
-
-@api_view(['GET'])
-def api_root(request, format=None):
-    return Response({
-        'users': reverse('user-list', request=request, format=format),
-        'snippets': reverse('snippet-list', request=request, format=format)
-    })
-
-class SnippetHighlight(generics.GenericAPIView):
-    queryset = Snippet.objects.all()
-    renderer_classes = [renderers.StaticHTMLRenderer]
-
-    def get(self, request, *args, **kwargs):
-        snippet = self.get_object()
-        return Response(snippet.highlighted)
-
-class UserViewSet(viewsets.ReadOnlyModelViewSet):
-    """
-    This viewset automatically provides `list` and `retrieve` actions.
-    """
-    queryset = User.objects.all()
-    serializer_class = UserSerializer
 
 class EnvironmentViewSet(viewsets.ModelViewSet):
     """
@@ -71,3 +51,42 @@ class EnvironmentViewSet(viewsets.ModelViewSet):
 
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
+
+class ListView(generic.ListView):
+    """
+    AKA the Dashboard
+    """
+    model = Snippet
+    template_name = 'app/index.html'
+    context_object_name = 'environment_list'
+    # def get_queryset(self):
+    #     """Return the last five published questions."""
+    #     return Question.objects.order_by('-pub_date')[:5]
+    def get_queryset(self):
+        """
+        Return the snippets objects back to the dash
+        """
+        return Snippet.objects.all()
+
+class SnippetHighlight(generics.GenericAPIView):
+    queryset = Snippet.objects.all()
+    renderer_classes = [renderers.StaticHTMLRenderer]
+
+    def get(self, request, *args, **kwargs):
+        snippet = self.get_object()
+        return Response(snippet.highlighted)
+
+class UserList(generics.ListAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+
+class UserDetail(generics.RetrieveAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+
+class UserViewSet(viewsets.ReadOnlyModelViewSet):
+    """
+    This viewset automatically provides `list` and `retrieve` actions.
+    """
+    queryset = User.objects.all()
+    serializer_class = UserSerializer

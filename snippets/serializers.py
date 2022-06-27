@@ -17,12 +17,13 @@ class SnippetSerializer(serializers.HyperlinkedModelSerializer):
         fields = [
             'url',
             'id',
+            'title',
+            'group',
+            'description',
             'highlight',
             'owner',
-            'title',
-            'description',
-            'language',
-            'style',
+            # 'language',
+            # 'style',
             'version_mke',
             'version_release'
         ]
