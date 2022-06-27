@@ -4,8 +4,12 @@ from rest_framework import renderers
 from django.urls import path
 from rest_framework.urlpatterns import format_suffix_patterns
 from snippets import views
+from django.urls import path
+from rest_framework.urlpatterns import format_suffix_patterns
+from snippets import views
 
-app_name = 'snippets'
+# Adding this is causing issues with loading the views
+# app_name = 'snippets'
 
 snippet_list = EnvironmentViewSet.as_view({
     'get': 'list',
