@@ -5,8 +5,8 @@ from rest_framework.reverse import reverse
 from django.contrib.auth.models import User
 from django.views import generic
 from envdash.permissions import IsOwnerOrReadOnly
-from envdash.models import Snippet
-from envdash.serializers import SnippetSerializer, UserSerializer
+from envdash.models import Environment
+from envdash.serializers import EnvironmentSerializer, UserSerializer
 
 @api_view(['GET'])
 def api_root(request, format=None):
@@ -19,16 +19,16 @@ def api_root(request, format=None):
     })
 
 class EnvironmentList(generics.ListCreateAPIView):
-    queryset = Snippet.objects.all()
-    serializer_class = SnippetSerializer
+    queryset = Environment.objects.all()
+    serializer_class = EnvironmentSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
 
 class EnvironmentDetail(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Snippet.objects.all()
-    serializer_class = SnippetSerializer
+    queryset = Environment.objects.all()
+    serializer_class = EnvironmentSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly,
                         IsOwnerOrReadOnly]
 
@@ -39,15 +39,15 @@ class EnvironmentViewSet(viewsets.ModelViewSet):
 
     Additionally we also provide an extra `highlight` action.
     """
-    queryset = Snippet.objects.all()
-    serializer_class = SnippetSerializer
+    queryset = Environment.objects.all()
+    serializer_class = EnvironmentSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly,
                           IsOwnerOrReadOnly]
 
     @action(detail=True, renderer_classes=[renderers.StaticHTMLRenderer])
     def highlight(self, request, *args, **kwargs):
-        snippet = self.get_object()
-        return Response(snippet.highlighted)
+        environment = self.get_object()
+        return Response(environment.highlighted)
 
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
@@ -56,7 +56,7 @@ class ListView(generic.ListView):
     """
     AKA the Dashboard
     """
-    model = Snippet
+    model = Environment
     template_name = 'app/index.html'
     context_object_name = 'environment_list'
     # def get_queryset(self):
@@ -64,17 +64,17 @@ class ListView(generic.ListView):
     #     return Question.objects.order_by('-pub_date')[:5]
     def get_queryset(self):
         """
-        Return the snippets objects back to the dash
+        Return the environments objects back to the dash
         """
-        return Snippet.objects.all()
+        return Environment.objects.all()
 
-class SnippetHighlight(generics.GenericAPIView):
-    queryset = Snippet.objects.all()
+class EnvironmentHighlight(generics.GenericAPIView):
+    queryset = Environment.objects.all()
     renderer_classes = [renderers.StaticHTMLRenderer]
 
     def get(self, request, *args, **kwargs):
-        snippet = self.get_object()
-        return Response(snippet.highlighted)
+        environment = self.get_object()
+        return Response(environment.highlighted)
 
 class UserList(generics.ListAPIView):
     queryset = User.objects.all()

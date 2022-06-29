@@ -1,24 +1,25 @@
 from rest_framework import serializers
-from envdash.models import Snippet, LANGUAGE_CHOICES, STYLE_CHOICES
+from envdash.models import Environment, LANGUAGE_CHOICES, STYLE_CHOICES
 from django.contrib.auth.models import User
 
-class SnippetSerializer(serializers.HyperlinkedModelSerializer):
+class EnvironmentSerializer(serializers.HyperlinkedModelSerializer):
     """
-    Snippets Serializer
+    Environments Serializer
     """
     owner = serializers.ReadOnlyField(source='owner.username')
-    highlight = serializers.HyperlinkedIdentityField(view_name='snippet-highlight', format='html')
+    highlight = serializers.HyperlinkedIdentityField(view_name='environment-highlight', format='html')
 
     class Meta:
         """
         Meta Class
         """
-        model = Snippet
+        model = Environment
         fields = [
             'url',
             'id',
             'title',
             'group',
+            'data_center',
             'description',
             'highlight',
             'owner',
@@ -32,9 +33,9 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
     """
     Users Serializer
     """
-    snippets = serializers.HyperlinkedRelatedField(
+    environments = serializers.HyperlinkedRelatedField(
         many=True,
-        view_name='snippet-detail',
+        view_name='environment-detail',
         read_only=True
     )
 
@@ -47,5 +48,5 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
             'url',
             'id',
             'username',
-            'snippets'
+            'environments'
         ]

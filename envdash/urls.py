@@ -1,4 +1,4 @@
-from envdash.models import Snippet
+from envdash.models import Environment
 from envdash.views import EnvironmentViewSet, UserViewSet, api_root
 from rest_framework import renderers
 from django.urls import path
@@ -11,19 +11,19 @@ from envdash import views
 # Adding this is causing issues with loading the views
 # app_name = 'snippets'
 
-snippet_list = EnvironmentViewSet.as_view({
+environment_list = EnvironmentViewSet.as_view({
     'get': 'list',
     'post': 'create'
 })
 
-snippet_detail = EnvironmentViewSet.as_view({
+environment_detail = EnvironmentViewSet.as_view({
     'get': 'retrieve',
     'put': 'update',
     'patch': 'partial_update',
     'delete': 'destroy'
 })
 
-snippet_highlight = EnvironmentViewSet.as_view({
+environment_highlight = EnvironmentViewSet.as_view({
     'get': 'highlight'
 }, renderer_classes=[renderers.StaticHTMLRenderer])
 
@@ -44,10 +44,10 @@ urlpatterns = format_suffix_patterns([
         name='environment-list'),
     path('environments/<int:pk>/',
         views.EnvironmentDetail.as_view(),
-        name='snippet-detail'),
+        name='environment-detail'),
     path('environments/<int:pk>/highlight/',
-        views.SnippetHighlight.as_view(),
-        name='snippet-highlight'),
+        views.EnvironmentHighlight.as_view(),
+        name='environment-highlight'),
     path('users/',
         views.UserList.as_view(),
         name='user-list'),

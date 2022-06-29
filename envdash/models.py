@@ -9,16 +9,17 @@ LEXERS = [item for item in get_all_lexers() if item[1]]
 LANGUAGE_CHOICES = sorted([(item[1][0], item[0]) for item in LEXERS])
 STYLE_CHOICES = sorted([(item, item) for item in get_all_styles()])
 
-class Snippet(models.Model):
+class Environment(models.Model):
     """
     Snippet is essentially the environment model
     """
     created = models.DateTimeField(auto_now_add=True)
     title = models.CharField(max_length=100, blank=True, default='')
+    data_center = models.CharField(max_length=24, blank=True, default='')
     description = models.TextField()
     language = models.CharField(choices=LANGUAGE_CHOICES, default='python', max_length=100)
     style = models.CharField(choices=STYLE_CHOICES, default='friendly', max_length=100)
-    owner = models.ForeignKey('auth.User', related_name='snippets', on_delete=models.CASCADE)
+    owner = models.ForeignKey('auth.User', related_name='environments', on_delete=models.CASCADE)
     highlighted = models.TextField()
     version_mke = models.CharField(max_length=24, blank=True, default='')
     version_release = models.CharField(max_length=24, blank=True, default='')

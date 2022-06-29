@@ -161,7 +161,10 @@ cython_debug/
 
 # db
 db.sqlite3
-snippets/migrations/*
+
+# Migrations
+envdash/migrations/*
+envdash/migrations
 
 # backup files
 .backup/

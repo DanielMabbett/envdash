@@ -9,23 +9,89 @@
     <link rel="stylesheet" href="{% static 'css/app.css' %}">
 </head>
 
-<body>
-    <h1>ENV DASH</h1>
-    {% if environment_list %}
-    <ul>
-        {% for environment in environment_list %}
-        <article>
-            <h2>{{ environment.title }}</h2>
-            <p>{{ environment.group }}</p>
-            <p>{{ environment.description|linebreaksbr }}</p>
-            <p>MKE Version: {{ environment.version_mke }}</p>
-            <p>Platform Release Version: {{ environment.version_release }}</p>
-        </article>
-        {% endfor %} 
-    </ul>
-    {% else %}
-    <p>This is a test.</p>
-    {% endif %}
+<body data-spy="scroll" data-target=".idocs-navigation" data-offset="125">
+
+    <!-- Header
+  ============================ -->
+    <header id="header" class="sticky-top">
+        <!-- Navbar -->
+        <nav class="primary-menu navbar navbar-expand-lg bg-dark navbar-dropdown-dark">
+            <div class="container-fluid">
+                <!-- Sidebar Toggler -->
+                <button id="sidebarCollapse" class="navbar-toggler d-block d-md-none" type="button"><span></span><span
+                        class="w-75"></span><span class="w-50"></span></button>
+
+                <!-- Logo -->
+                <a class="logo ml-md-3" href="" title="Env Dash"> <img src="assets/images/logo.png" alt="Env Dash" />
+                </a>
+                <!-- Logo End -->
+
+                <!-- Navbar Toggler -->
+                <button class="navbar-toggler ml-auto" type="button" data-toggle="collapse"
+                    data-target="#header-nav"><span></span><span></span><span></span></button>
+
+                <div id="header-nav" class="collapse navbar-collapse justify-content-end">
+                    <ul class="navbar-nav">
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <!-- Navbar End -->
+    </header>
+    <!-- Header End -->
+
+    <!-- Content
+  ============================ -->
+    <div id="content" role="main">
+
+        <!-- Sidebar Navigation
+	============================ -->
+        <div class="idocs-navigation bg-light">
+            <ul class="nav flex-column ">
+                <li class="nav-item"><a class="nav-link" href="/dashboard">Environments</a></li>
+                <li class="nav-item"><a class="nav-link" href="/">API</a></li>
+            </ul>
+        </div>
+        
+        <!-- Docs Content
+	============================ -->
+        <div class="idocs-content">
+            <div class="container">
+
+                <!-- Getting Started
+          ============================ -->
+                <section id="idocs_start">
+                    <h1>Environments</h1>
+                    {% if environment_list %}
+                    {% for environment in environment_list %}
+                    <hr>
+                    <h2>{{ environment.title }}</h2>
+                    <p class="lead">{{ environment.description|linebreaksbr }}</p>
+
+                    <div class="row">
+                        <div class="col-sm-6 col-lg-4">
+                            <ul class="list-unstyled">
+                                <li><strong>Group:</strong> {{ environment.group }} </li>
+                                <li><strong>Datacenter:</strong> {{ environment.data_center }} </li>
+                            </ul>
+                        </div>
+                        <div class="col-sm-6 col-lg-4">
+                            <ul class="list-unstyled">
+                                <li><strong class="font-weight-700">MKE Version:</strong> {{ environment.version_mke }}
+                                </li>
+                                <li><strong>Platform Version:</strong> {{ environment.version_release }} </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    {% endfor %}
+                    {% else %}
+                    <p> No environments found </p>
+                    {% endif %}
+
+                </section>
+            </div>
+        </div>
 </body>
 
 </html>
