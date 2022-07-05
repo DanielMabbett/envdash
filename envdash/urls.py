@@ -11,6 +11,11 @@ from envdash import views
 # Adding this is causing issues with loading the views
 # app_name = 'snippets'
 
+# cluster_list = EnvironmentViewSet.as_view({
+#     'get': 'list',
+#     'post': 'create'
+# })
+
 environment_list = EnvironmentViewSet.as_view({
     'get': 'list',
     'post': 'create'
@@ -38,7 +43,17 @@ user_detail = UserViewSet.as_view({
 # API endpoints
 urlpatterns = format_suffix_patterns([
     path('', views.ListView.as_view()),
+    path('clusters', views.ClusterListView.as_view()),
     path('api', views.api_root),
+    path('api/clusters/',
+        views.ClusterList.as_view(),
+        name='cluster-list'),
+    path('api/clusters/<int:pk>/',
+        views.ClusterDetail.as_view(),
+        name='cluster-detail'),
+    path('api/clusters/<int:pk>/highlight/',
+        views.EnvironmentHighlight.as_view(),
+        name='cluster-highlight'),
     path('api/environments/',
         views.EnvironmentList.as_view(),
         name='environment-list'),

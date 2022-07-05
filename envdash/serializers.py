@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from envdash.models import Environment, LANGUAGE_CHOICES, STYLE_CHOICES
+from envdash.models import Environment, Cluster, LANGUAGE_CHOICES, STYLE_CHOICES
 from django.contrib.auth.models import User
 
 class EnvironmentSerializer(serializers.HyperlinkedModelSerializer):
@@ -8,7 +8,12 @@ class EnvironmentSerializer(serializers.HyperlinkedModelSerializer):
     """
     owner = serializers.ReadOnlyField(source='owner.username')
     highlight = serializers.HyperlinkedIdentityField(view_name='environment-highlight', format='html')
-
+    # clusters = serializers.HyperlinkedRelatedField(
+    #     many=True,
+    #     view_name='cluster-detail',
+    #     read_only=True
+    # )
+    
     class Meta:
         """
         Meta Class
@@ -19,14 +24,37 @@ class EnvironmentSerializer(serializers.HyperlinkedModelSerializer):
             'id',
             'title',
             'group',
-            'data_center',
+            'location',
             'description',
             'highlight',
             'owner',
-            # 'language',
-            # 'style',
+            # 'clusters',
             'version_mke',
             'version_release'
+
+        ]
+
+class ClusterSerializer(serializers.HyperlinkedModelSerializer):
+    """
+    Environments Serializer
+    """
+    #owner = serializers.ReadOnlyField(source='owner.username')
+    highlight = serializers.HyperlinkedIdentityField(view_name='cluster-highlight', format='html')
+
+    class Meta:
+        """
+        Meta Class
+        """
+        model = Cluster
+        fields = [
+            'url',
+            'id',
+            'title',
+            'type',
+            'description',
+            'environment',
+            'highlight',
+            'version'
         ]
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):

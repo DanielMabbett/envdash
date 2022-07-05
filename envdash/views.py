@@ -5,19 +5,29 @@ from rest_framework.reverse import reverse
 from django.contrib.auth.models import User
 from django.views import generic
 from envdash.permissions import IsOwnerOrReadOnly
-from envdash.models import Environment
-from envdash.serializers import EnvironmentSerializer, UserSerializer
+from envdash.models import Environment, Cluster
+from envdash.serializers import ClusterSerializer, EnvironmentSerializer, UserSerializer
 
 @api_view(['GET'])
 def api_root(request, format=None):
     """
-    The root view for the API
+    API Root View
     """
     return Response({
         'users': reverse('user-list', request=request, format=format),
-        'environments': reverse('environment-list', request=request, format=format)
+        'environments': reverse('environment-list', request=request, format=format),
+        'clusters': reverse('cluster-list', request=request, format=format)
     })
 
+class ClusterList(generics.ListCreateAPIView):
+    queryset = Cluster.objects.all()
+    serializer_class = ClusterSerializer
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+
+    def perform_create(self, serializer):
+        # serializer.save(owner=self.request.user)
+        serializer.save()
+        
 class EnvironmentList(generics.ListCreateAPIView):
     queryset = Environment.objects.all()
     serializer_class = EnvironmentSerializer
@@ -31,7 +41,13 @@ class EnvironmentDetail(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = EnvironmentSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly,
                         IsOwnerOrReadOnly]
-
+    
+class ClusterDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Cluster.objects.all()
+    serializer_class = ClusterSerializer
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly,
+                        IsOwnerOrReadOnly]
+    
 class EnvironmentViewSet(viewsets.ModelViewSet):
     """
     This viewset automatically provides `list`, `create`, `retrieve`,
@@ -54,7 +70,7 @@ class EnvironmentViewSet(viewsets.ModelViewSet):
 
 class ListView(generic.ListView):
     """
-    AKA the Dashboard
+    AKA the Environment Dashboard
     """
     model = Environment
     template_name = 'app/index.html'
@@ -67,6 +83,19 @@ class ListView(generic.ListView):
         Return the environments objects back to the dash
         """
         return Environment.objects.all()
+
+class ClusterListView(generic.ListView):
+    """
+    AKA the Cluster Dashboard
+    """
+    model = Cluster
+    template_name = 'app/clusters.html'
+    context_object_name = 'cluster_list'
+    def get_queryset(self):
+        """
+        Return the environments objects back to the dash
+        """
+        return Cluster.objects.all()
 
 class EnvironmentHighlight(generics.GenericAPIView):
     queryset = Environment.objects.all()

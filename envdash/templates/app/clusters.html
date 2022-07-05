@@ -1,4 +1,5 @@
 {% load static %}
+
 <!DOCTYPE html>
 <html>
 
@@ -33,10 +34,6 @@
                     <ul class="navbar-nav">
                     </ul>
                 </div>
-
-                <ul class="nav flex-column">
-                    <li class="nav-item"><a class="nav-link" href="https://github.com/DanielMabbett/envdash">GitHub</a></li>
-                </ul>
             </div>
         </nav>
         <!-- Navbar End -->
@@ -51,8 +48,9 @@
 	============================ -->
         <div class="idocs-navigation bg-light">
             <ul class="nav flex-column ">
-                <li class="nav-item"><a class="nav-link" href="/">Environments</a></li>                
-                <li class="nav-item"><a class="nav-link" href="/clusters">Clusters</a></li>                
+                <li class="nav-item"><a class="nav-link" href="/">Environments</a></li>
+                <li class="nav-item"><a class="nav-link" href="/clusters">Clusters</a></li>
+                
             </ul>
             <ul class="nav flex-column">
                 <li class="nav-item"><a class="nav-link" href="/api">API</a></li>
@@ -67,32 +65,26 @@
                 <!-- Getting Started
           ============================ -->
                 <section id="idocs_start">
-                    <h2>Environments</h2>
-                    {% if environment_list %}
-                    {% for environment in environment_list %}
+                    <h2>Clusters</h2>
+                    {% if cluster_list %}
+                    {% for cluster in cluster_list %}
                     <hr>
-                    <h3>{{ environment.title }}</h3>
-                    <p class="lead">{{ environment.description|linebreaksbr }}</p>
+                    <h3>{{ cluster.title }}</h3>
+                    <p class="lead">{{ cluster.description|linebreaksbr }}</p>
 
                     <div class="row">
                         <div class="col-sm-6 col-lg-4">
                             <ul class="list-unstyled">
-                                <li><strong>Group:</strong> {{ environment.group }} </li>
-                                <li><strong>Location:</strong> {{ environment.location }} </li>
-                            </ul>
-                        </div>
-                        <div class="col-sm-6 col-lg-4">
-                            <ul class="list-unstyled">
-                                <li><strong class="font-weight-700">MKE Version:</strong> {{ environment.version_mke }}
-                                </li>
-                                <li><strong>Platform Version:</strong> {{ environment.version_release }} </li>
+                                <li><strong>Type:</strong> {{ cluster.type }} </li>
+                                <li><strong>Environment:</strong> {{ cluster.environment }} </li>
+                                <li><strong>Version:</strong> {{ cluster.location }} </li>
                             </ul>
                         </div>
                     </div>
 
                     {% endfor %}
                     {% else %}
-                    <p> No environments found </p>
+                    <p> No clusters found </p>
                     {% endif %}
 
                 </section>
