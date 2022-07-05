@@ -37,21 +37,21 @@ user_detail = UserViewSet.as_view({
 
 # API endpoints
 urlpatterns = format_suffix_patterns([
-    path('dashboard', views.ListView.as_view()),
-    path('', views.api_root),
-    path('environments/',
+    path('', views.ListView.as_view()),
+    path('api', views.api_root),
+    path('api/environments/',
         views.EnvironmentList.as_view(),
         name='environment-list'),
-    path('environments/<int:pk>/',
+    path('api/environments/<int:pk>/',
         views.EnvironmentDetail.as_view(),
         name='environment-detail'),
-    path('environments/<int:pk>/highlight/',
+    path('api/environments/<int:pk>/highlight/',
         views.EnvironmentHighlight.as_view(),
         name='environment-highlight'),
-    path('users/',
+    path('api/users/',
         views.UserList.as_view(),
         name='user-list'),
-    path('users/<int:pk>/',
+    path('api/users/<int:pk>/',
         views.UserDetail.as_view(),
         name='user-detail'),
 ])
