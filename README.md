@@ -1,6 +1,7 @@
 # Env Dash
 
 [![Django CI](https://github.com/DanielMabbett/envdash/actions/workflows/django.yml/badge.svg)](https://github.com/DanielMabbett/envdash/actions/workflows/django.yml)
+[![Docker Image CI](https://github.com/DanielMabbett/envdash/actions/workflows/docker-image.yml/badge.svg)](https://github.com/DanielMabbett/envdash/actions/workflows/docker-image.yml)
 
 Envdash is an Infrastructure environment dashboard tool. 
 
