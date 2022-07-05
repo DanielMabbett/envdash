@@ -1,5 +1,7 @@
 # Env Dash
 
+[![Django CI](https://github.com/DanielMabbett/envdash/actions/workflows/django.yml/badge.svg)](https://github.com/DanielMabbett/envdash/actions/workflows/django.yml)
+
 Envdash is an Infrastructure environment dashboard tool. 
 
 The idea is to give groups in your organisation access to see what environment is on what version of the platform release (if you work via releases).
