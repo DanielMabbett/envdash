@@ -11,11 +11,11 @@ STYLE_CHOICES = sorted([(item, item) for item in get_all_styles()])
 
 class Environment(models.Model):
     """
-    Snippet is essentially the environment model
+    Environment Model
     """
     created = models.DateTimeField(auto_now_add=True)
     title = models.CharField(max_length=100, blank=True, default='')
-    data_center = models.CharField(max_length=24, blank=True, default='')
+    location = models.CharField(max_length=24, blank=True, default='')
     description = models.TextField()
     language = models.CharField(choices=LANGUAGE_CHOICES, default='python', max_length=100)
     style = models.CharField(choices=STYLE_CHOICES, default='friendly', max_length=100)
@@ -27,7 +27,10 @@ class Environment(models.Model):
 
     class Meta:
         ordering = ['created']
-
+        
+    def __str__(self):
+        return self.title
+    
     def save(self, *args, **kwargs):
         """
         Use the `pygments` library to create a highlighted HTML
@@ -46,3 +49,25 @@ class Environment(models.Model):
             formatter
         )
         super().save(*args, **kwargs)
+
+class Cluster(models.Model):
+    """
+    Cluster Model
+    """
+    created = models.DateTimeField(auto_now_add=True)
+    title = models.CharField(max_length=100, blank=True, default='')
+    environment = models.ForeignKey(Environment, on_delete=models.CASCADE)
+    type = models.CharField(max_length=24, blank=True, default='')
+    version = models.CharField(max_length=24, blank=True, default='')
+    description = models.TextField()
+    # owner = models.ForeignKey('auth.User', related_name='clusters', on_delete=models.CASCADE)
+
+    language = models.CharField(choices=LANGUAGE_CHOICES, default='python', max_length=100)
+    style = models.CharField(choices=STYLE_CHOICES, default='friendly', max_length=100)
+    highlighted = models.TextField()
+
+    def __str__(self):
+        return self.title
+
+    class Meta:
+        ordering = ['created']
