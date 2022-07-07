@@ -3,6 +3,8 @@
 [![Django CI](https://github.com/DanielMabbett/envdash/actions/workflows/django.yml/badge.svg)](https://github.com/DanielMabbett/envdash/actions/workflows/django.yml)
 [![Docker Image CI](https://github.com/DanielMabbett/envdash/actions/workflows/docker-image.yml/badge.svg)](https://github.com/DanielMabbett/envdash/actions/workflows/docker-image.yml)
 
+![alt text](img/banner.png)
+
 Envdash is an Infrastructure environment dashboard tool. 
 
 The idea is to give groups in your organisation access to see what environment is on what version of the platform release (if you work via releases).
@@ -16,28 +18,26 @@ curl --location --request POST 'http://127.0.0.1:8000/api/environments/' \
 --header 'Content-Type: application/json' \
 --header 'Cookie: csrftoken=3puWbsMc3aUwzqmmoZ6B25d5LqAwwxyC177x3oOfBM0LHwyFcjij7AAIAaU3vDR3' \
 --data-raw '{
-    "title": "myEnvironment",
-    "group": "theBestGroup",
-    "location": "mars",
-    "description": "description?",
-    "version_mke": "1.0.0",
-    "version_release": "2.0.0"
+    "title": "Production001",
+    "group": "myInternalGroupName",
+    "location": "AzureNorthEurope",
+    "description": "This is the main production environment for our company",
+    "version": "1.0.2"
 }'
 ```
 
 Response:
 ```json
 {
-    "url": "http://127.0.0.1:8000/api/environments/2/",
-    "id": 2,
-    "title": "myEnvironment",
-    "group": "theBestGroup",
-    "location": "mars",
-    "description": "description?",
-    "highlight": "http://127.0.0.1:8000/api/environments/2/highlight/",
+    "url": "http://127.0.0.1:8000/api/environments/1/",
+    "id": 1,
+    "title": "Production001",
+    "group": "myInternalGroupName",
+    "location": "AzureNorthEurope",
+    "description": "This is the main production environment for our company",
+    "highlight": "http://127.0.0.1:8000/api/environments/1/highlight/",
     "owner": "admin",
-    "version_mke": "1.0.0",
-    "version_release": "2.0.0"
+    "version": "1.0.2"
 }
 ```
 
@@ -74,13 +74,15 @@ python manage.py createsuperuser
 
 ### Dashboard
 
-There are two dashboards. One for Environments Overview, and one for Clusters Overview
+There are two dashboards (with more improvements coming!)...
+
+One for Environments Overview, and one for Clusters Overview
 
 Environments:
 ```
 https://localhost:8000/
 ```
-![alt text](img/dashboard.png)
+![alt text](img/overview.png)
 
 Clusters:
 ```

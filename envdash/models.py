@@ -21,8 +21,7 @@ class Environment(models.Model):
     style = models.CharField(choices=STYLE_CHOICES, default='friendly', max_length=100)
     owner = models.ForeignKey('auth.User', related_name='environments', on_delete=models.CASCADE)
     highlighted = models.TextField()
-    version_mke = models.CharField(max_length=24, blank=True, default='')
-    version_release = models.CharField(max_length=24, blank=True, default='')
+    version = models.CharField(max_length=24, blank=True, default='')
     group = models.CharField(max_length=24, blank=True, default='')
 
     class Meta:
@@ -54,13 +53,14 @@ class Cluster(models.Model):
     """
     Cluster Model
     """
+    environment = models.ForeignKey(Environment, related_name="clusters", on_delete=models.CASCADE)
+    owner = models.ForeignKey('auth.User', related_name='clusters', on_delete=models.CASCADE)
+
     created = models.DateTimeField(auto_now_add=True)
     title = models.CharField(max_length=100, blank=True, default='')
-    environment = models.ForeignKey(Environment, on_delete=models.CASCADE)
     type = models.CharField(max_length=24, blank=True, default='')
     version = models.CharField(max_length=24, blank=True, default='')
     description = models.TextField()
-    # owner = models.ForeignKey('auth.User', related_name='clusters', on_delete=models.CASCADE)
 
     language = models.CharField(choices=LANGUAGE_CHOICES, default='python', max_length=100)
     style = models.CharField(choices=STYLE_CHOICES, default='friendly', max_length=100)

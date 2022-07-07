@@ -1,103 +1,53 @@
 {% load static %}
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
-    <title>Env Dash</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
-        integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-    <link rel="stylesheet" href="{% static 'css/app.css' %}">
+    <meta charset="utf-8">
+    <title>Envdash</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Dashboard HTML based on the Ollie landing page.">
+    <meta name="author" content="DanielMabbett">
+
+    <!-- font icons -->
+    <link rel="stylesheet" href="assets/vendors/themify-icons/css/themify-icons.css">
+
+    <!-- owl carousel -->
+    <link rel="stylesheet" href="assets/vendors/owl-carousel/css/owl.carousel.css">
+    <link rel="stylesheet" href="assets/vendors/owl-carousel/css/owl.theme.default.css">
+
+    <!-- Bootstrap + Ollie main styles -->
+    <link rel="stylesheet" href="{% static 'css/ollie.css' %}">
 </head>
 
-<body data-spy="scroll" data-target=".idocs-navigation" data-offset="125">
+<body data-spy="scroll" data-target=".navbar" data-offset="40" id="home">
 
-    <!-- Header
-  ============================ -->
-    <header id="header" class="sticky-top">
-        <!-- Navbar -->
-        <nav class="primary-menu navbar navbar-expand-lg navbar-dropdown-dark">
-            <div class="container-fluid">
-                <!-- Sidebar Toggler -->
-                <button id="sidebarCollapse" class="navbar-toggler d-block d-md-none" type="button"><span></span><span
-                        class="w-75"></span><span class="w-50"></span></button>
-
-                <!-- Logo -->
-                <a class="logo ml-md-3" href="" title="Env Dash"> <img src="{% static 'logo.png' %}" alt="Env Dash" /></a>
-                <!-- Logo End -->
-
-                <!-- Navbar Toggler -->
-                <button class="navbar-toggler ml-auto" type="button" data-toggle="collapse"
-                    data-target="#header-nav"><span></span><span></span><span></span></button>
-
-                <div id="header-nav" class="collapse navbar-collapse justify-content-end">
-                    <ul class="navbar-nav">
-                    </ul>
-                </div>
-
-                <ul class="nav flex-column">
-                    <li class="nav-item"><a class="nav-link" href="https://github.com/DanielMabbett/envdash">GitHub</a></li>
+    <nav id="scrollspy" class="navbar navbar-light bg-light navbar-expand-lg fixed-top" data-spy="affix" data-offset-top="20">
+        <div class="container">
+            <a class="nav-link" href="/">Envdash</a>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/environments">Environments</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/clusters">Clusters</a>
+                    </li>
+                    <li class="nav-item ml-0 ml-lg-4">
+                        <a class="nav-link btn btn-primary" href="/api">API</a>
+                    </li>
                 </ul>
             </div>
-        </nav>
-        <!-- Navbar End -->
-    </header>
-    <!-- Header End -->
-
-    <!-- Content
-  ============================ -->
-    <div id="content" role="main">
-
-        <!-- Sidebar Navigation
-	============================ -->
-        <div class="idocs-navigation bg-light">
-            <ul class="nav flex-column ">
-                <li class="nav-item"><a class="nav-link" href="/">Environments</a></li>                
-                <li class="nav-item"><a class="nav-link" href="/clusters">Clusters</a></li>                
-            </ul>
-            <ul class="nav flex-column">
-                <li class="nav-item"><a class="nav-link" href="/api">API</a></li>
-            </ul>
         </div>
-        
-        <!-- Docs Content
-	============================ -->
-        <div class="idocs-content">
-            <div class="container">
+    </nav>
 
-                <!-- Getting Started
-          ============================ -->
-                <section id="idocs_start">
-                    <h2>Environments</h2>
-                    {% if environment_list %}
-                    {% for environment in environment_list %}
-                    <hr>
-                    <h3>{{ environment.title }}</h3>
-                    <p class="lead">{{ environment.description|linebreaksbr }}</p>
+    {% block content %}
+    {% endblock content %}
 
-                    <div class="row">
-                        <div class="col-sm-6 col-lg-4">
-                            <ul class="list-unstyled">
-                                <li><strong>Group:</strong> {{ environment.group }} </li>
-                                <li><strong>Location:</strong> {{ environment.location }} </li>
-                            </ul>
-                        </div>
-                        <div class="col-sm-6 col-lg-4">
-                            <ul class="list-unstyled">
-                                <li><strong class="font-weight-700">MKE Version:</strong> {{ environment.version_mke }}
-                                </li>
-                                <li><strong>Platform Version:</strong> {{ environment.version_release }} </li>
-                            </ul>
-                        </div>
-                    </div>
-
-                    {% endfor %}
-                    {% else %}
-                    <p> No environments found </p>
-                    {% endif %}
-
-                </section>
-            </div>
-        </div>
 </body>
 
 </html>

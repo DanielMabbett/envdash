@@ -1,0 +1,30 @@
+{% extends 'app/index.html' %}
+{% block content %}
+<br>
+<br>
+<section class="section" id="clusters">
+    <div class="container">
+        <h6 class="xs-font mb-0">Clusters are component items within Environments</h6>
+        <h2 class="section-title mb-4">Clusters</h2>
+        {% if cluster_list %}
+            <div class="row text-left">
+                {% for cluster in cluster_list %}
+                    <div class="col-lg-4">
+                        <a href="javascript:void(0)" class="card border-0 text-dark">
+                            <span class="card-body">
+                                <h4 class="title mt-4"> {{ cluster.environment }}</h4>
+                                <p class="xs-font">Type: {{ cluster.type }}{{ cluster.version }}</p>
+                                <p class="xs-font">Environment: {{ cluster.environment }}</p>
+                                <p class="xs-font">Version: {{ cluster.version }}</p>
+                                <p>{{ cluster.description|linebreaksbr }}</p>
+                            </span>
+                        </a>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+        <p> No clusters found </p>
+        {% endif %}
+    </div>
+</section>
+{% endblock %}

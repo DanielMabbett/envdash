@@ -8,11 +8,11 @@ class EnvironmentSerializer(serializers.HyperlinkedModelSerializer):
     """
     owner = serializers.ReadOnlyField(source='owner.username')
     highlight = serializers.HyperlinkedIdentityField(view_name='environment-highlight', format='html')
-    # clusters = serializers.HyperlinkedRelatedField(
-    #     many=True,
-    #     view_name='cluster-detail',
-    #     read_only=True
-    # )
+    clusters = serializers.HyperlinkedRelatedField(
+        many=True,
+        view_name='cluster-detail',
+        read_only=True
+    )
     
     class Meta:
         """
@@ -28,10 +28,8 @@ class EnvironmentSerializer(serializers.HyperlinkedModelSerializer):
             'description',
             'highlight',
             'owner',
-            # 'clusters',
-            'version_mke',
-            'version_release'
-
+            'clusters',
+            'version'
         ]
 
 class ClusterSerializer(serializers.HyperlinkedModelSerializer):
@@ -66,7 +64,11 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
         view_name='environment-detail',
         read_only=True
     )
-
+   # clusters = serializers.HyperlinkedRelatedField(
+   #     many=True,
+   #     view_name='cluster-detail',
+   #     read_only=True
+   # )
     class Meta:
         """
         Meta Class
