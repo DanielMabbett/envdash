@@ -105,7 +105,7 @@ https://localhost:8000/api/environments
 
 clusters
 ```
-https://localhost:8000/api/environments
+https://localhost:8000/api/clusters
 ```
 
 users
