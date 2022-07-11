@@ -1,4 +1,4 @@
-# Env Dash
+# Envdash
 
 [![Django CI](https://github.com/DanielMabbett/envdash/actions/workflows/django.yml/badge.svg)](https://github.com/DanielMabbett/envdash/actions/workflows/django.yml)
 [![Docker Image CI](https://github.com/DanielMabbett/envdash/actions/workflows/docker-image.yml/badge.svg)](https://github.com/DanielMabbett/envdash/actions/workflows/docker-image.yml)
@@ -122,7 +122,6 @@ You will need to run a terminal session into the pod to create your super user:
 ```bash
 python manage.py createsuperuser
 ```
-
 
 ## Contributors
 
