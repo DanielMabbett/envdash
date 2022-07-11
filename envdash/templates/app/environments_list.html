@@ -1,28 +1,29 @@
 {% extends 'app/index.html' %}
 {% block content %}
-<br>
-<br>
+
 <section class="section" id="environments">
     <div class="container">
         <h6 class="xs-font mb-0">Keep an eye on all your environment deployments.</h6>
         <h2 class="section-title mb-4">Environments</h2>
-        
-        
-        {% if environment_list %}
-        {% for environment in environment_list %}
-        <a href="/environments" class="item expertises-item">
-            <h6 class="mt-3 mb-2">{{ environment.title }}</h6>
+    </div>
+</section>
+
+{% if environment_list %}
+{% for environment in environment_list %}
+<section class="section" id="environments_list">
+    <div class="container">
+        <a href="{% url 'gui-environment-detail' environment.id %}" class="item expertises-item">
+            <h4 class="mt-3 mb-2">🌱{{ environment.title }}</h4>
             <p class="xs-font">Group: {{ environment.group }}</p>
             <p class="xs-font">Location: {{ environment.location }}</p>
             <p class="xs-font">Version: {{ environment.version }}</p>
             <p>{{ environment.description|linebreaksbr }}</p>
         </a>
-        <br>
-        {% endfor %}
-        {% else %}
-        <p> No environments found </p>
-        {% endif %}
     </div>
 </section>
+{% endfor %}
+{% else %}
+        <p> No environments found </p>
+{% endif %}
 
 {% endblock %}

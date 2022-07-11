@@ -9,43 +9,16 @@ from django.urls import path
 from rest_framework.urlpatterns import format_suffix_patterns
 from envdash import views
 
-# Adding this is causing issues with loading the views
-# app_name = 'snippets'
-
-# cluster_list = EnvironmentViewSet.as_view({
-#     'get': 'list',
-#     'post': 'create'
-# })
-# 
-# environment_list = EnvironmentViewSet.as_view({
-#     'get': 'list',
-#     'post': 'create'
-# })
-# 
-# environment_detail = EnvironmentViewSet.as_view({
-#     'get': 'retrieve',
-#     'put': 'update',
-#     'patch': 'partial_update',
-#     'delete': 'destroy'
-# })
-# 
-# environment_highlight = EnvironmentViewSet.as_view({
-#     'get': 'highlight'
-# }, renderer_classes=[renderers.StaticHTMLRenderer])
-# 
-# user_list = UserViewSet.as_view({
-#     'get': 'list'
-# })
-# 
-# user_detail = UserViewSet.as_view({
-#     'get': 'retrieve'
-# })
-# 
-# API endpoints
 urlpatterns = format_suffix_patterns([
+    # gui
     path('', views.LandingView.as_view()),
     path('environments', views.ListView.as_view()),
+    path('environments/<int:pk>/',
+        views.GUIEnvironmentDetail.as_view(),
+        name='gui-environment-detail'),
     path('clusters', views.ClusterListView.as_view()),
+
+    # api
     path('api', views.api_root),
     path('api/clusters/',
         views.ClusterList.as_view(),

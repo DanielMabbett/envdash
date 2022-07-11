@@ -38,34 +38,27 @@ class EnvironmentList(generics.ListCreateAPIView):
 class EnvironmentDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Environment.objects.all()
     serializer_class = EnvironmentSerializer
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly,
-                        IsOwnerOrReadOnly]
-    
+    permission_classes = [
+        permissions.IsAuthenticatedOrReadOnly,
+        IsOwnerOrReadOnly
+    ]
+
+class GUIEnvironmentDetail(generic.DetailView):
+    """
+    AKA the Environment Dashboard
+    """
+    model = Environment
+    template_name = 'app/environments_detail.html'
+    context_object_name = 'environment'
+
 class ClusterDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Cluster.objects.all()
     serializer_class = ClusterSerializer
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly,
-                        IsOwnerOrReadOnly]
-    
-# class EnvironmentViewSet(viewsets.ModelViewSet):
-#     """
-#     This viewset automatically provides `list`, `create`, `retrieve`,
-#     `update` and `destroy` actions.
-# 
-#     Additionally we also provide an extra `highlight` action.
-#     """
-#     queryset = Environment.objects.all()
-#     serializer_class = EnvironmentSerializer
-#     permission_classes = [permissions.IsAuthenticatedOrReadOnly,
-#                           IsOwnerOrReadOnly]
-# 
-#     @action(detail=True, renderer_classes=[renderers.StaticHTMLRenderer])
-#     def highlight(self, request, *args, **kwargs):
-#         environment = self.get_object()
-#         return Response(environment.highlighted)
-# 
-#     def perform_create(self, serializer):
-#         serializer.save(owner=self.request.user)
+    permission_classes = [
+        permissions.IsAuthenticatedOrReadOnly,
+        IsOwnerOrReadOnly
+    ]
+
 class LandingView(generic.ListView):
     """
     AKA the first Dashboard you see, the overview page
@@ -73,9 +66,6 @@ class LandingView(generic.ListView):
     model = Environment
     template_name = 'app/landing.html'
     context_object_name = 'object_list'
-    # def get_queryset(self):
-    #     """Return the last five published questions."""
-    #     return Question.objects.order_by('-pub_date')[:5]
     def get_queryset(self):
         """
         Return the environments objects back to the dash
@@ -130,11 +120,3 @@ class UserList(generics.ListAPIView):
 class UserDetail(generics.RetrieveAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
-
-# class UserViewSet(viewsets.ReadOnlyModelViewSet):
-#     """
-#     This viewset automatically provides `list` and `retrieve` actions.
-#     """
-#     queryset = User.objects.all()
-#     serializer_class = UserSerializer
-# 

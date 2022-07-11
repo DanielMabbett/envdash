@@ -1,0 +1,55 @@
+{% extends 'app/index.html' %}
+{% block content %}
+{% if environment %}
+<section class="section" id="environments">
+    <div class="container">
+        
+        <h2 class="section-title mb-4">{{ environment.title }}</h2>
+    </div>
+    <div class="container">
+            <p class="xs-font">Group: {{ environment.group }}</p>
+            <p class="xs-font">Location: {{ environment.location }}</p>
+            <p class="xs-font">Version: {{ environment.version }}</p>
+            <p>{{ environment.description|linebreaksbr }}</p>
+    </div>
+</section>
+
+
+<section class="section" id="clusters">
+{% if environment.clusters %}
+    <div class="container">
+        <h6 class="xs-font mb-0">Linked clusters to this environment...</h6>
+
+            <div class="row text-left">
+{% for cluster in environment.clusters.all %}
+                    <div class="col-lg-4">
+                        <a href="{% url 'cluster-detail' cluster.id %}" class="card border-0 text-dark">
+                            <span class="card-body">
+                                <h4 class="title mt-4"> 🚀{{ cluster.title }} </h4>
+                                <p class="xs-font">Type: {{ cluster.type }}</p>
+                                <p class="xs-font">Version: {{ cluster.version }}</p>
+                                <p class="xs-font">Description: {{ cluster.description|linebreaksbr }}</p>
+                            </span>
+                        </a>
+                    </div>
+{% endfor %}
+            </div>
+
+    </div>
+</section>
+
+{% else %}
+<p> No clusters found </p>
+{% endif %}
+
+{% else %}
+        <p> No environments found </p>
+{% endif %}
+<section class="section" id="back">
+    <div class="container">
+        <a href="/environments" class="item expertises-item">
+            <button class="btn btn-primary btn-rounded">Back</button>
+        </a>
+    </div>
+</section>
+{% endblock %}
