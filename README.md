@@ -11,6 +11,59 @@ The idea is to give groups in your organisation access to see what environment i
 
 Its lightweight, based on REST commands, so can easily fit into almost any workflow (examples coming).
 
+## Features 
+
+### Dashboard
+
+There are two dashboards (with more improvements coming!)...
+
+One for Environments Overview, and one for Clusters Overview
+
+Overview:
+```
+https://localhost:8000/
+```
+![alt text](img/overview.png)
+
+Environments:
+```
+https://localhost:8000/
+```
+![alt text](img/environments.png)
+
+Clicking on an environment will show a detailed view (shows the linked clusters)
+![alt text](img/environment-detail.png)
+
+Clusters:
+```
+https://localhost:8000/clusters/
+```
+![alt text](img/clusters.png)
+
+### RESTful API 
+
+root
+```
+https://localhost:8000/api
+```
+![alt text](img/api-root.png)
+
+environments
+```
+https://localhost:8000/api/environments
+```
+![alt text](img/api-environments.png)
+
+clusters
+```
+https://localhost:8000/api/environments
+```
+
+users
+```
+https://localhost:8000/api/users
+```
+
 Quick example (using admin/admin for username/password): 
 ```bash
 curl --location --request POST 'http://127.0.0.1:8000/api/environments/' \
@@ -68,49 +121,6 @@ You will need to run a terminal session into the pod to create your super user:
 
 ```bash
 python manage.py createsuperuser
-```
-
-## Features 
-
-### Dashboard
-
-There are two dashboards (with more improvements coming!)...
-
-One for Environments Overview, and one for Clusters Overview
-
-Environments:
-```
-https://localhost:8000/
-```
-![alt text](img/overview.png)
-
-Clusters:
-```
-https://localhost:8000/clusters/
-```
-
-### RESTful API 
-
-root
-```
-https://localhost:8000/api
-```
-![alt text](img/api-root.png)
-
-environments
-```
-https://localhost:8000/api/environments
-```
-![alt text](img/api-environments.png)
-
-clusters
-```
-https://localhost:8000/api/clusters
-```
-
-users
-```
-https://localhost:8000/api/users
 ```
 
 ## Contributors

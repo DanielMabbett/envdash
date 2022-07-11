@@ -11,8 +11,8 @@
             <div class="col-md-4">
                 <br>
                 <br>
-                <h3 class="section-title">Overview</h3>
-                <p>Here you can see the number of environments and clusters that are managed across your estate.</p>
+                <h3 class="section-title">Envdash</h3>
+                <p>A quick overview of the number of environments and clusters managed across your estate.</p>
             </div>
             <div class="col-sm-6 col-md-4 ml-auto">
                 <div class="widget">
@@ -23,7 +23,9 @@
                         {% if object_list %}
                         <h4 class="text-primary">{{ object_list.environments | length }}</h4>
                         {% endif %}
-                        <p>Environments</p>
+                        <a href="/environments" class="item expertises-item">
+                        <p>🌱Environments</p>
+                        </a>
                     </div>
                 </div>
             </div>
@@ -36,7 +38,9 @@
                         {% if object_list %}
                         <h4 class="text-primary">{{ object_list.clusters | length }}</h4>
                         {% endif %}
-                        <p>Clusters</p>
+                        <a href="/clusters" class="item expertises-item">
+                        <p>🚀Clusters</p>
+                        </a>
                     </div>
                 </div>
             </div>
@@ -59,7 +63,9 @@
                         <div class="col">
                         </div>
                         <div class="col">
-                            <h6 class="subtitle font-weight-normal mb-1">GitHub</h6>
+                            <a href="https://github.com/DanielMabbett/envdash" class="item expertises-item">
+                                <button class="btn btn-primary btn-rounded">GitHub</button>
+                            </a>
                             <div class="social-links">
                                 <a href="javascript:void(0)" class="link pr-1"><i class="ti-facebook"></i></a>
                                 <a href="javascript:void(0)" class="link pr-1"><i class="ti-twitter-alt"></i></a>

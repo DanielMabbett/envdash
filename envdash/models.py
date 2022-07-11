@@ -25,7 +25,7 @@ class Environment(models.Model):
     group = models.CharField(max_length=24, blank=True, default='')
 
     class Meta:
-        ordering = ['created']
+        ordering = ['title']
         
     def __str__(self):
         return self.title
@@ -70,4 +70,4 @@ class Cluster(models.Model):
         return self.title
 
     class Meta:
-        ordering = ['created']
+        ordering = ['title']
