@@ -22,7 +22,7 @@ class EnvironmentSerializer(serializers.HyperlinkedModelSerializer):
         fields = [
             'url',
             'id',
-            'title',
+            # 'title',
             'group',
             'location',
             'description',

@@ -14,7 +14,7 @@ class Environment(models.Model):
     Environment Model
     """
     created = models.DateTimeField(auto_now_add=True)
-    title = models.CharField(max_length=100, blank=True, default='')
+    id = models.CharField(primary_key=True, max_length=100, blank=True, default='')
     location = models.CharField(max_length=24, blank=True, default='')
     description = models.TextField()
     language = models.CharField(choices=LANGUAGE_CHOICES, default='python', max_length=100)
@@ -25,10 +25,10 @@ class Environment(models.Model):
     group = models.CharField(max_length=24, blank=True, default='')
 
     class Meta:
-        ordering = ['title']
+        ordering = ['id']
         
     def __str__(self):
-        return self.title
+        return self.id
     
     def save(self, *args, **kwargs):
         """
@@ -36,7 +36,7 @@ class Environment(models.Model):
         representation of the code snippet.
         """
         lexer = get_lexer_by_name(self.language)
-        options = {'title': self.title} if self.title else {}
+        options = {'title': self.id} if self.id else {}
         formatter = HtmlFormatter(
             style=self.style,
             full=True,
