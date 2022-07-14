@@ -11,6 +11,8 @@ The idea is to give groups in your organisation access to see what environment i
 
 Its lightweight, based on REST commands, so can easily fit into almost any workflow (examples coming).
 
+> Envdash is *not yet production ready*! This is still in a pre-release status.
+
 ## Features 
 
 ### Dashboard
@@ -98,8 +100,18 @@ Response:
 
 ### Docker
 
+Build:
 ```sh
-docker build . 
+docker build . -t envdash
+```
+
+Run:
+```
+docker run -it -p 8020:8020 \
+     -e DJANGO_SUPERUSER_USERNAME=envdash \
+     -e DJANGO_SUPERUSER_PASSWORD=somePassWordThat1MadeUp? \
+     -e DJANGO_SUPERUSER_EMAIL=admin@justanexample.com \
+     envdash
 ```
 
 ### Docker Compose 
