@@ -1,23 +1,26 @@
-ARG VARIANT="3.8"
-FROM python:${VARIANT}
+# Dockerfile
+FROM python:3.8-buster
 
-LABEL maintainer=""
+# install nginx
+RUN apt-get update && apt-get install nginx vim -y --no-install-recommends
+COPY nginx.default /etc/nginx/sites-available/default
+RUN ln -sf /dev/stdout /var/log/nginx/access.log \
+    && ln -sf /dev/stderr /var/log/nginx/error.log
 
+# copy source and install dependencies
+RUN mkdir -p /opt/app
+RUN mkdir -p /opt/app/pip_cache
+RUN mkdir -p /opt/app/envdash
 
-ENV PYTHONDONTWRITEBYTECODE=1
-ENV PYTHONUNBUFFERED=1
-WORKDIR /code
+COPY requirements.txt start-server.sh /opt/app/
+COPY .pip_cache /opt/app/pip_cache/
+COPY . /opt/app/envdash/
 
-COPY requirements.txt /code/
-RUN pip install -r requirements.txt
-COPY . /code/
+WORKDIR /opt/app
+RUN pip install -r requirements.txt --cache-dir /opt/app/pip_cache
+RUN chown -R www-data:www-data /opt/app
 
-# COPY docker-entrypoint.sh /
-# ENTRYPOINT ["/docker-entrypoint.sh"]
-# 
-EXPOSE 8000
-# 
-# #STOPSIGNAL SIGQUIT
-# 
-# #CMD ["nginx", "-g", "daemon off;"]
-CMD [ "python", "manage.py", "runserver", "0.0.0.0:8000"]
+# start server
+EXPOSE 8020
+STOPSIGNAL SIGTERM
+CMD ["/opt/app/start-server.sh"]
